@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true  # 访问 http://localhost:8080/h2-console
+#AI大模型配置项
+ai-model:
+  api-key: "sk-aa68faaa357b41ab8eeeb91cc7556165"
+  model-name: "qwen-max" # 可换为 qwen-plus、qwen-turbo
+
+server:
+  port: 8080

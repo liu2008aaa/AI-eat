@@ -1,0 +1,51 @@
+假设你有一个工具 `SearchTool`，它可以进行网络搜索。
+
+```java
+import ai.langchain4j.tool.Tool;
+import ai.langchain4j.tool.Use;
+
+public class SearchTool {
+
+    @Use
+    public String search(String query) {
+        // 实现搜索逻辑
+        return "搜索结果: " + query;
+    }
+}
+```
+
+### 2. 注册工具
+
+将工具注册到 `langchain4j` 的工具箱中。
+
+```java
+import ai.langchain4j.agent.toolkit.Toolkit;
+import ai.langchain4j.agent.toolkit.ToolkitConfiguration;
+import ai.langchain4j.model.openai.OpenAiChatModel;
+import ai.langchain4j.tool.Tool;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Toolkit<SearchTool> toolkit = Toolkit.of(SearchTool.class);
+
+        // 配置OpenAI模型
+        OpenAiChatModel model = OpenAiChatModel.builder()
+            .apiKey("your-api-key")
+            .build();
+
+        // 创建工具箱配置
+        ToolkitConfiguration configuration = ToolkitConfiguration.builder()
+            .model(model)
+            .toolkit(toolkit)
+            .build();
+
+        // 获取代理
+        var agent = configuration.createAgent();
+
+        // 与代理交互
+        String result = agent.execute("搜索一下关于人工智能的信息");
+        System.out.println(result);
+    }
+}
+```
